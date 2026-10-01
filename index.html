@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energy at Home: TVs and Electricity Prices</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <p class="eyebrow">COS30045 Data Visualisation</p>
+    <h1>Energy at home: what our TVs use, and what that power costs</h1>
+    <p class="lede">
+      Televisions are one of the most common appliances in Australian homes, and every model sold
+      carries an energy rating label. The first three charts explore those labels: how much energy
+      TVs use, how screen size drives consumption, and how the major screen technologies compare.
+      The final chart puts that consumption in context by showing how wholesale electricity prices
+      in the National Electricity Market have changed since 1998.
+    </p>
+    <p class="hint">Hover over any chart for exact values. Click legend items to show or hide a series.</p>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <h2>Half of all TV models use under 400 kWh a year</h2>
+      <p class="desc">
+        Distribution of labelled energy consumption across all 3,703 TV models in the dataset.
+        Each bar counts the models in a 50&nbsp;kWh/year band. A small number of very large screens
+        stretch the tail past 1,000&nbsp;kWh.
+      </p>
+      <div id="histogram" class="chart"></div>
+    </section>
+
+    <section class="card">
+      <h2>OLED screens use the most energy</h2>
+      <p class="desc">
+        Mean labelled energy consumption by screen technology. Switch to 55-inch TVs to compare
+        like-for-like: the gap narrows because OLED models skew towards larger screens.
+      </p>
+      <div class="controls" id="bar-controls" role="group" aria-label="Screen size filter"></div>
+      <div id="bar-chart" class="chart"></div>
+    </section>
+
+    <section class="card wide">
+      <h2>Bigger screens, bigger energy bills</h2>
+      <p class="desc">
+        Each circle is a group of models from one brand with the same screen technology and size.
+        Circle area shows how many models are in the group. Consumption rises steadily with screen size,
+        with OLED models sitting towards the top at any given size.
+      </p>
+      <div class="controls legend" id="scatter-legend"></div>
+      <div id="scatter-chart" class="chart"></div>
+    </section>
+
+    <section class="card wide">
+      <h2>Wholesale electricity prices have more than tripled since 2011</h2>
+      <p class="desc">
+        Annual average spot price ($ per megawatt hour) by NEM region, 1998&ndash;2024. The dashed line is the
+        mainland average (Queensland, NSW, Victoria and South Australia). Tasmania joined the market in 2005
+        and the Snowy region was abolished in 2008.
+      </p>
+      <div class="controls legend" id="line-legend"></div>
+      <div id="line-chart" class="chart"></div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    Data: Australian Government Energy Rating (TV labels) and Australian Energy Regulator (spot prices), supplied as COS30045 Exercise 5 datasets.
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/histogram.js"></script>
+  <script src="js/bar.js"></script>
+  <script src="js/scatter.js"></script>
+  <script src="js/line.js"></script>
+</body>
+</html>

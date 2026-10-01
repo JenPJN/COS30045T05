@@ -1,0 +1,162 @@
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+
+  /* Categorical slots, assigned in fixed order */
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --s4: #eda100;
+  --s5: #e87ba4;
+  --s6: #008300;
+  --s7: #4a3aa7;
+  --s8: #e34948;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --s1: #3987e5;
+    --s2: #d95926;
+    --s3: #199e70;
+    --s4: #c98500;
+    --s5: #d55181;
+    --s6: #008300;
+    --s7: #9085e9;
+    --s8: #e66767;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 clamp(16px, 4vw, 48px);
+  background: var(--page);
+  color: var(--text-primary);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.page-header,
+.grid,
+.page-footer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header { padding-block: 48px 24px; }
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(26px, 3.6vw, 38px);
+  line-height: 1.15;
+  max-width: 24ch;
+}
+.lede {
+  margin: 0 0 12px;
+  max-width: 70ch;
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+.hint { margin: 0; color: var(--text-muted); font-size: 13px; }
+
+/* Two columns on wide screens, one on narrow */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.card.wide { grid-column: 1 / -1; }
+@media (max-width: 860px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 20px 12px;
+  min-width: 0;
+}
+.card h2 { margin: 0 0 6px; font-size: 18px; line-height: 1.3; }
+.desc { margin: 0 0 12px; color: var(--text-secondary); font-size: 14px; max-width: 80ch; }
+
+.chart { width: 100%; position: relative; }
+.chart svg { display: block; overflow: visible; }
+
+/* Axes & grid: recessive */
+.axis text { fill: var(--text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.axis path, .axis line { stroke: var(--axis); }
+.grid-lines line { stroke: var(--grid); }
+.grid-lines path { display: none; }
+.axis-label { fill: var(--text-secondary); font-size: 12px; }
+.value-label { fill: var(--text-primary); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.direct-label { fill: var(--text-secondary); font-size: 12px; }
+
+/* Controls: toggles and legend buttons */
+.controls { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-bottom: 8px; }
+.controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.controls button:hover { background: var(--border); }
+.controls button[aria-pressed="false"] { color: var(--text-muted); }
+.controls button[aria-pressed="false"] .swatch { opacity: 0.25; }
+.controls .segmented[aria-pressed="true"] { background: var(--text-primary); color: var(--surface); }
+.swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.swatch.line { height: 3px; border-radius: 2px; }
+.swatch.dashed { height: 0; border-top: 2px dashed var(--text-primary); background: none !important; }
+
+/* Tooltip */
+.tooltip {
+  position: fixed;
+  z-index: 10;
+  pointer-events: none;
+  min-width: 140px;
+  padding: 8px 10px;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+.tooltip .tt-title { font-weight: 600; margin-bottom: 4px; }
+.tooltip .tt-row { display: flex; align-items: center; gap: 6px; }
+.tooltip .tt-row .tt-val { margin-left: auto; padding-left: 12px; font-variant-numeric: tabular-nums; font-weight: 600; }
+.tooltip .tt-muted { color: var(--text-secondary); }
+
+.page-footer { padding-block: 32px 48px; color: var(--text-muted); font-size: 13px; }
